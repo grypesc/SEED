@@ -19,14 +19,6 @@ def softmax_temperature(x, dim, tau=1.0):
     return torch.softmax(x / tau, dim=dim)
 
 
-class FeatureAdaptator(nn.Module):
-    def __init__(self, in_dim, out_dim):
-        super().__init__()
-        self.linear1 = nn.Linear(in_dim, out_dim)
-
-    def forward(self, x):
-        return self.linear1(x)
-
 
 class Appr(Inc_Learning_Appr):
     """Class implementing the joint baseline"""
@@ -124,9 +116,6 @@ class Appr(Inc_Learning_Appr):
             bb_to_finetune = self._choose_backbone_to_finetune(t, trn_loader, val_loader)
             print(f"Finetuning backbone {bb_to_finetune} on task {t}:")
             self.finetune_backbone(t, bb_to_finetune, trn_loader, val_loader)
-            # if self.compensate_drifts:
-            #     print("Drift compensation:")
-            #     self._drift_compensation(bb_to_finetune, trn_loader, val_loader, old_model)
 
         print(f"Creating distributions for task {t}:")
         self.create_distributions(t, trn_loader, val_loader)
@@ -217,7 +206,6 @@ class Appr(Inc_Learning_Appr):
 
 
     def finetune_backbone(self, t, bb_to_finetune, trn_loader, val_loader):
-
         old_model = copy.deepcopy(self.model.bbs[bb_to_finetune])
         for name, param in old_model.named_parameters():
             param.requires_grad = False
@@ -286,49 +274,6 @@ class Appr(Inc_Learning_Appr):
         # torch.save(self.model.state_dict(), f"{self.logger.exp_path}/model_{t}.pth")
         return old_model
 
-    # def _drift_compensation(self, bb_finetuned, trn_loader, val_loader, old_model):
-    #     """ Train MLP that predicts drifts and use it to update means of old distributions """
-    #     feature_adaptator = FeatureAdaptator(self.model.num_features, self.model.num_features)
-    #     feature_adaptator.to(self.device)
-    #     optimizer = torch.optim.SGD(feature_adaptator.parameters(), lr=1e-1, weight_decay=1e-5, momentum=0.9)
-    #     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=[30, 60, 90], gamma=0.1)
-    #     model = self.model.bbs[bb_finetuned]
-    #     model.eval()
-    #     for epoch in range(100):
-    #         train_losses, val_losses = [], []
-    #         feature_adaptator.train()
-    #         for images, _ in trn_loader:
-    #             images = images.to(self.device)
-    #             with torch.no_grad():
-    #                 old_features = old_model(images)
-    #                 new_features = model(images)
-    #             optimizer.zero_grad()
-    #             pred_features = feature_adaptator(old_features)
-    #             loss = nn.functional.mse_loss(pred_features, new_features)
-    #             loss.backward()
-    #             optimizer.step()
-    #             train_losses.append(float(loss))
-    #         scheduler.step()
-    #         feature_adaptator.eval()
-    #         with torch.no_grad():
-    #             for images, _ in val_loader:
-    #                 images = images.to(self.device)
-    #                 old_features = old_model(images)
-    #                 new_features = model(images)
-    #                 pred_features = feature_adaptator(old_features)
-    #                 loss = nn.functional.mse_loss(pred_features, new_features)
-    #                 val_losses.append(loss)
-    #
-    #         train_loss = sum(train_losses) / len(trn_loader.dataset)
-    #         valid_loss = sum(val_losses) / len(val_loader.dataset)
-    #         print(f"Epoch: {epoch} Train loss: {1e3*train_loss:.2f} Val loss: {1e3*valid_loss:.2f} ")
-    #
-    #     with torch.no_grad():
-    #         feature_adaptator.eval()
-    #         means = torch.stack([d.mu.data[0][0] for d in self.experts_distributions[bb_finetuned]])
-    #         new_means = feature_adaptator(means)
-    #         for i, d in enumerate(self.experts_distributions[bb_finetuned]):
-    #             d.mu.data[0, 0] = new_means[i]
 
     @torch.no_grad()
     def create_distributions(self, t, trn_loader, val_loader):
@@ -360,12 +305,6 @@ class Appr(Inc_Learning_Appr):
                     features = model(torch.flip(images, dims=(3,)))
                     class_features[from_+bsz: from_+2*bsz] = features
                     from_ += 2*bsz
-
-                # if self.remove_outliers:
-                #     median = torch.median(class_features, dim=0)[0]
-                #     dist = torch.cdist(class_features, median.unsqueeze(0), p=2).squeeze(1)
-                #     not_outliers = torch.topk(dist, int(0.99*class_features.shape[0]), largest=False, sorted=False)[1]
-                #     class_features = class_features[not_outliers]
 
                 # Calculate distributions
                 cov_type = "full" if self.use_multivariate else "diag"
