@@ -9,17 +9,17 @@ This repository contains code for the SEED paper published at the main track of 
 To reproduce results run one of provided scripts. 
 
 
-Run SEED on CIFAR100 10 task, 10 classes each:
+Run SEED on CIFAR100 10 tasks, 10 classes each:
 ```bash
 python cifar10x10.sh
 ```
 
-Run SEED on CIFAR100 20 task, 5 classes each:
+Run SEED on CIFAR100 20 tasks, 5 classes each:
 ```bash
 python cifar20x5.sh
 ```
 
-Run SEED on CIFAR100 50 task, 2 classes each:
+Run SEED on CIFAR100 50 tasks, 2 classes each:
 ```bash
 python cifar50x2.sh
 ```
