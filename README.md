@@ -23,5 +23,6 @@ Run SEED on CIFAR100 50 tasks, 2 classes each:
 ```bash
 python cifar50x2.sh
 ```
+To lower the number of parameters as in Tab.5 use ```--network resnet 20 --shared 2```. You can also add parameter pruning as in DER.
 
 If you would like to cooperate on improving the method, please contact me via LinkedIn or Facebook, I have several ideas.
