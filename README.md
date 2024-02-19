@@ -27,13 +27,11 @@ bash cifar50x2.sh
 To lower the number of parameters as in Tab.5 use ```--network resnet 20 --shared 2```. You can also add parameter pruning as in DER.
 
 To reproduce results for ImageNet Subset download ImageNet subset from https://www.kaggle.com/datasets/arjunashok33/imagenet-subset-for-inc-learn and put it in ```../data``` directory.
-
-To reproduce results for DomainNet download ImageNet subset from http://ai.bu.edu/M3SDA/ and put it in ```../data``` directory.
 ```bash
 bash imagenet.sh
 ```
 
-
+To reproduce results for DomainNet download cleaned version from http://ai.bu.edu/M3SDA/ and put it in ```../data``` directory (unzip it).
 Run SEED on DomainNet 12 tasks of different domains, 25 classes each:
 ```bash
 bash domainnet12x25.sh
@@ -43,3 +41,10 @@ If you would like to cooperate on improving the method, please contact me via Li
 
 If you find this work useful, please consider citing it:
 
+```
+@article{rypesc2024divide,
+  title={Divide and not forget: Ensemble of selectively trained experts in Continual Learning},
+  author={Rype{\'s}{\'c}, Grzegorz and Cygert, Sebastian and Khan, Valeriya and Trzci{\'n}ski, Tomasz and Zieli{\'n}ski, Bartosz and Twardowski, Bart{\l}omiej},
+  journal={arXiv preprint arXiv:2401.10191},
+  year={2024}
+   ```
