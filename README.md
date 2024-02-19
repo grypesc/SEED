@@ -47,4 +47,5 @@ If you find this work useful, please consider citing it:
   author={Rype{\'s}{\'c}, Grzegorz and Cygert, Sebastian and Khan, Valeriya and Trzci{\'n}ski, Tomasz and Zieli{\'n}ski, Bartosz and Twardowski, Bart{\l}omiej},
   journal={arXiv preprint arXiv:2401.10191},
   year={2024}
+}
    ```
