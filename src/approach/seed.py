@@ -318,9 +318,9 @@ class Appr(Inc_Learning_Appr):
                         print(f"WARNING: Covariance matrix is singular. Increasing eps to: {eps:.7f} but this may hurt results")
                     else:
                         is_ok = True
-                        if self.use_nmc:
-                            gmm.var = torch.nn.Parameter(torch.ones(self.model.num_features, device=self.device).unsqueeze(0).unsqueeze(0))
 
+                if len(gmm.mu.data.shape) == 2:
+                    gmm.mu.data = gmm.mu.data.unsqueeze(1)
                 self.experts_distributions[bb_num].append(gmm)
 
     @torch.no_grad()
