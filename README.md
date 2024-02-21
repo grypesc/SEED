@@ -31,11 +31,12 @@ To reproduce results for ImageNet Subset download ImageNet subset from https://w
 bash imagenet10x10.sh
 ```
 
-To reproduce results for DomainNet download cleaned version from http://ai.bu.edu/M3SDA/ and put it in ```../data/domainnet``` directory (unzip it).
-Run SEED on DomainNet 12 tasks of different domains, 25 classes each:
+To reproduce results for DomainNet download it from http://ai.bu.edu/M3SDA/ and put it in ```../data/domainnet``` directory (unzip it).
+Run SEED on DomainNet 36 tasks of different domains, 5 classes each:
 ```bash
-bash domainnet12x25.sh
+bash domainnet36x5.sh
 ```
+You can add ```--extra-aug fetril``` flag to enable better augmentations.
 
 If you would like to cooperate on improving the method, please contact me via LinkedIn or Facebook, I have several ideas.
 
