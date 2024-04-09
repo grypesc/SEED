@@ -43,10 +43,10 @@ If you would like to cooperate on improving the method, please contact me via Li
 If you find this work useful, please consider citing it:
 
 ```
-@article{rypesc2024divide,
+@inproceedings{rypesc2023divide,
   title={Divide and not forget: Ensemble of selectively trained experts in Continual Learning},
-  author={Rype{\'s}{\'c}, Grzegorz and Cygert, Sebastian and Khan, Valeriya and Trzci{\'n}ski, Tomasz and Zieli{\'n}ski, Bartosz and Twardowski, Bart{\l}omiej},
-  journal={arXiv preprint arXiv:2401.10191},
-  year={2024}
+  author={Rype{\'s}{\'c}, Grzegorz and Cygert, Sebastian and Khan, Valeriya and Trzcinski, Tomasz and Zieli{\'n}ski, Bartosz Micha{\l} and Twardowski, Bart{\l}omiej},
+  booktitle={The Twelfth International Conference on Learning Representations},
+  year={2023}
 }
    ```
